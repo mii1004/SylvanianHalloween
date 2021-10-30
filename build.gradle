@@ -1,8 +1,20 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		maven { url "https://repo1.maven.org/maven2" }
+	}
+	dependencies {
+		classpath "org.openapitools:openapi-generator-gradle-plugin:5.0.0"
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.5.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+
+apply plugin: 'org.openapi.generator'
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -20,6 +32,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -27,4 +40,19 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+openApiGenerate {
+	generatorName = "spring"
+	inputSpec = "$rootDir/Sylvanian-Halloween-API.yaml".toString()
+	outputDir = "$rootDir".toString()
+	apiPackage = "com.example.sylvanianhalloween.controller"
+	invokerPackage = "com.example.sylvanianhalloween.invoker"
+	modelPackage = "com.example.sylvanianhalloween.model"
+	generateModelTests = true
+	generateApiTests = true
+	configOptions = [
+			dateLibrary: "java11",
+			openApiNullable: "false"
+	]
 }

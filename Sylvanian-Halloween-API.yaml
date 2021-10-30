@@ -1,0 +1,103 @@
+openapi: 3.1.0
+info:
+  title: Sylvanian Halloween API
+  version: '1.0'
+  description: シルバニアハロウィンのコラボメニューを取得するAPIです
+  summary: Sylvanian Halloween API
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /food:
+    get:
+      summary: Get All Food Menu
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Food'
+      operationId: get-food
+      description: コラボメニュー（フード）を全て取得します
+  /food/recommend:
+    get:
+      summary: Get Recommend Food Menu
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Food'
+      operationId: get-food-recommend
+      description: コラボメニュー（フード）のおすすめを1件取得します
+  /drink:
+    get:
+      summary: Get All Drink Menu
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Drink'
+      operationId: get-drink
+      description: コラボメニュー（ドリンク）を全て取得します
+  /drink/recommend:
+    get:
+      summary: Get Recommend Drink Menu
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Drink'
+      operationId: get-drink-recommend
+      description: コラボメニュー（ドリンク）のおすすめを1件取得します
+components:
+  schemas:
+    Drink:
+      title: Drink
+      type: object
+      description: コラボメニュー（ドリンク）のモデルです
+      examples:
+        - name: ふわふわキャラメルマロンカフェラテ
+          storeName: THE CAMP CAFE & GRILL
+          price: 715
+      properties:
+        name:
+          type: string
+          example: ふわふわキャラメルマロンカフェラテ
+        storeName:
+          type: string
+          example: THE CAMP CAFE & GRILL
+        price:
+          type: integer
+          example: 715
+    Food:
+      title: Food
+      type: object
+      properties:
+        name:
+          type: string
+          example: きのことチーズのあつあつハンバーグ
+        storeName:
+          type: string
+          example: アルカサール
+        price:
+          type: integer
+          example: 1595
+      description: コラボメニュー（フード）のモデルです
+      examples:
+        - name: きのことチーズのあつあつハンバーグ
+          storeName: アルカサール
+          price: 1595
